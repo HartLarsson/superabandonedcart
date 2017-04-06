@@ -29,7 +29,7 @@ class LaunchCampaign
 				LEFT JOIN `"._DB_PREFIX_."carrier` ca ON (ca.id_carrier = a.id_carrier)
 				LEFT JOIN `"._DB_PREFIX_."orders` o ON (o.id_cart = a.id_cart)
 				LEFT JOIN `"._DB_PREFIX_."connections` co ON (a.id_guest = co.id_guest AND TIME_TO_SEC(TIMEDIFF('".date('Y-m-d H:i:s')."', co.`date_add`)) < 1800)
-				WHERE a.date_add > (NOW() - INTERVAL 60 DAY) ORDER BY a.id_cart DESC 
+				WHERE a.date_add > (NOW() - INTERVAL 60 DAY) AND a.id_cart IN (SELECT id_cart FROM `"._DB_PREFIX_."cart_product`) ORDER BY a.id_cart DESC
 		) AS toto WHERE id_order='Abandoned cart'";
 
 		$currency = Context::getContext()->currency->sign;
